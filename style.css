@@ -117,7 +117,7 @@ footer div {
 }
 
 footer div.show {
-    max-height: 209px;
+    max-height: 220px;
 }
 
 @keyframes fadeInUp {
