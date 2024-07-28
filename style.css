@@ -97,7 +97,7 @@ footer div {
 footer div.show {
     display: block; /* Tampilkan elemen */
     opacity: 1; /* Nontransparan */
-    max-height: 250px; /* Tinggi maksimal */
+    max-height: 201px; /* Tinggi maksimal */
 }
 
 @keyframes fadeInUp {
