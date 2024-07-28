@@ -1,13 +1,18 @@
 let kataList = [];
-const fonts = ['Roboto', 'Open Sans', 'Lobster'];
+const fonts = ['Roboto', 'Open Sans'];
+let currentMusic = null;
 
-export function playMusic() {
+export function playMusic(src) {
     const music = document.getElementById('backgroundMusic');
-    music.play().then(() => {
-        console.log('Musik mulai diputar otomatis.');
-    }).catch(error => {
-        console.log('Musik tidak bisa diputar otomatis karena kebijakan browser:', error);
-    });
+    if (currentMusic !== src) {
+        music.src = src;
+        currentMusic = src;
+        music.play().then(() => {
+            console.log('Musik mulai diputar otomatis.');
+        }).catch(error => {
+            console.log('Musik tidak bisa diputar otomatis karena kebijakan browser:', error);
+        });
+    }
 }
 
 export function loadKata() {
@@ -24,14 +29,16 @@ export function changeKata() {
         const kataInspirasional = document.getElementById('kataInspirasional');
         const randomIndex = Math.floor(Math.random() * kataList.length);
         const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+        const selectedKata = kataList[randomIndex];
         kataInspirasional.style.opacity = 0; // Sembunyikan teks sebelum mengganti
         setTimeout(() => {
-            kataInspirasional.textContent = kataList[randomIndex];
+            kataInspirasional.textContent = selectedKata.text;
             kataInspirasional.style.display = 'block'; // Tampilkan kata-kata inspiratif
             kataInspirasional.style.fontFamily = randomFont; // Terapkan font acak
             kataInspirasional.style.animation = 'none'; // Hapus animasi sebelumnya
             kataInspirasional.offsetHeight; // Trigger reflow untuk mengaplikasikan animasi baru
             kataInspirasional.style.animation = 'fadeInUp 1s forwards'; // Tambahkan animasi
+            playMusic(selectedKata.music); // Putar musik sesuai dengan kata-kata
         }, 200);
     }
 }
