@@ -6,14 +6,27 @@
     <title>Website dengan Musik Otomatis</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Open+Sans&family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="rain"></div>
     <header>
-        <h2 id="salamPembuka">Selamat Datang di Barudak Melayu</h2>
-        <div class="description">
-            <p>situs gabut sirkel Melayu, tap 2 kali untuk mengganti quote</p>
+        <div class="header-content" id="headerContent">
+            <h2 id="salamPembuka">Selamat Datang di Barudak Melayu</h2>
+            <div class="description">
+                <p>Situs gabut sirkel Melayu, tap 2 kali untuk mengganti quote</p>
+            </div>
         </div>
+        <div class="nav-icon" id="navIcon">
+            <i class="fas fa-bars"></i>
+        </div>
+       <nav class="header-nav" id="headerNav">
+    <a href="#home" class="nav-link">Home</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <a href="assets/tqto.html" class="nav-link">TQTO</a>
+</nav>
+
     </header>
     <div class="content">
         <button id="masukButton">Masuk</button>
@@ -21,7 +34,7 @@
         <audio id="backgroundMusic" loop></audio>
     </div>
     <footer>
-        <a href="#" id="showCreators">Dibuat dengan ❤️</a>
+        <a href="#" id="showCreators">Tampilkan Pembuat</a>
         <div id="creatorsList" class="dropdown">
             <p>Raihan (Dev)</p>
             <p>Zul (Admin & Quote)</p>
@@ -31,7 +44,6 @@
             <p>Rehan (Quote)</p>
         </div>
     </footer>
-    
 
     <script type="module">
         import { loadKata, changeKata, showCreators } from './script.js';
@@ -39,16 +51,36 @@
         document.addEventListener('DOMContentLoaded', () => {
             const masukButton = document.getElementById('masukButton');
             const showCreatorsLink = document.getElementById('showCreators');
+            const navIcon = document.getElementById('navIcon');
+            const headerNav = document.getElementById('headerNav');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const headerContent = document.getElementById('headerContent');
 
             masukButton.addEventListener('click', () => {
                 loadKata();
-                document.querySelector('header').style.display = 'none'; // Sembunyikan header setelah diklik
+                headerContent.style.display = 'none'; // Sembunyikan header content setelah diklik
                 masukButton.style.display = 'none'; // Sembunyikan tombol setelah diklik
             });
 
             document.addEventListener('dblclick', changeKata); // Mengganti kata dengan klik 2 kali di mana saja
 
             showCreatorsLink.addEventListener('click', showCreators);
+
+            navIcon.addEventListener('click', () => {
+                headerNav.classList.toggle('show');
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    headerNav.classList.remove('show');
+                });
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.header-nav') && !event.target.closest('#navIcon')) {
+                    headerNav.classList.remove('show');
+                }
+            });
         });
     </script>
 </body>

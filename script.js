@@ -1,4 +1,5 @@
 let kataList = [];
+let usedKataList = [];
 const fonts = ['Roboto', 'Open Sans'];
 let currentMusic = null;
 
@@ -20,27 +21,38 @@ export function loadKata() {
         .then(response => response.json())
         .then(data => {
             kataList = data.kata;
+            usedKataList = []; // Reset used list when new data is loaded
             changeKata(); // Panggil untuk menampilkan kata pertama
         });
 }
 
 export function changeKata() {
-    if (kataList.length > 0) {
-        const kataInspirasional = document.getElementById('kataInspirasional');
-        const randomIndex = Math.floor(Math.random() * kataList.length);
-        const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
-        const selectedKata = kataList[randomIndex];
-        kataInspirasional.style.opacity = 0; // Sembunyikan teks sebelum mengganti
-        setTimeout(() => {
-            kataInspirasional.textContent = selectedKata.text;
-            kataInspirasional.style.display = 'block'; // Tampilkan kata-kata inspiratif
-            kataInspirasional.style.fontFamily = randomFont; // Terapkan font acak
-            kataInspirasional.style.animation = 'none'; // Hapus animasi sebelumnya
-            kataInspirasional.offsetHeight; // Trigger reflow untuk mengaplikasikan animasi baru
-            kataInspirasional.style.animation = 'fadeInUp 1s forwards'; // Tambahkan animasi
-            playMusic(selectedKata.music); // Putar musik sesuai dengan kata-kata
-        }, 200);
+    if (kataList.length === 0) return;
+
+    if (usedKataList.length === kataList.length) {
+        usedKataList = []; // Reset if all quotes have been used
     }
+
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * kataList.length);
+    } while (usedKataList.includes(randomIndex));
+
+    usedKataList.push(randomIndex);
+
+    const kataInspirasional = document.getElementById('kataInspirasional');
+    const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+    const selectedKata = kataList[randomIndex];
+    kataInspirasional.style.opacity = 0; // Sembunyikan teks sebelum mengganti
+    setTimeout(() => {
+        kataInspirasional.textContent = selectedKata.text;
+        kataInspirasional.style.display = 'block'; // Tampilkan kata-kata inspiratif
+        kataInspirasional.style.fontFamily = randomFont; // Terapkan font acak
+        kataInspirasional.style.animation = 'none'; // Hapus animasi sebelumnya
+        kataInspirasional.offsetHeight; // Trigger reflow untuk mengaplikasikan animasi baru
+        kataInspirasional.style.animation = 'fadeInUp 1s forwards'; // Tambahkan animasi
+        playMusic(selectedKata.music); // Putar musik sesuai dengan kata-kata
+    }, 200);
 }
 
 export function showCreators(event) {
