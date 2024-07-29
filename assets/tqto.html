@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TQTO - Thank You to</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Open+Sans&family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="rain"></div>
+    <header>
+        <div class="header-content">
+            <h2>Thank You to</h2>
+            <div class="description">
+                <p>This page is dedicated to all who have contributed and supported us.</p>
+            </div>
+        </div>
+        <div class="nav-icon" id="navIcon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <nav class="header-nav" id="headerNav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+    </header>
+    <div class="tqto-content">
+        <h1>Special Thanks</h1>
+        <p>We would like to express our gratitude to:</p>
+        <ul>
+            <li>Raihan (Dev)</li>
+            <li>Zul (Admin & Quote)</li>
+            <li>Hanan (Admin & Quote)</li>
+            <li>Agil (Quote)</li>
+            <li>Akbar (Quote)</li>
+            <li>Delvi (Quote)</li>
+            <li>Rehan (Quote)</li>
+        </ul>
+    </div>
+    <audio id="backgroundMusic" src="assets/music.mp3" autoplay loop></audio>
+
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const navIcon = document.getElementById('navIcon');
+            const headerNav = document.getElementById('headerNav');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            navIcon.addEventListener('click', () => {
+                headerNav.classList.toggle('show');
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    headerNav.classList.remove('show');
+                });
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.header-nav') && !event.target.closest('#navIcon')) {
+                    headerNav.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
